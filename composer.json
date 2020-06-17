@@ -1,0 +1,26 @@
+{
+    "name": "fng-dev/category-base",
+    "description": "Category and Products Management System",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Franco Nascimento",
+            "email": "fng.desenvolvedor@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Fng\\CategoryBase\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Fng\\CategoryBase\\LoggerServiceProvider"
+            ]
+        }
+    }
+}
