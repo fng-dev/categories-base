@@ -29,7 +29,7 @@ class Type extends Model
      */
 
     protected static $rules = [
-        'name' => 'string',
+        'name' => 'required|string',
     ];
 
 

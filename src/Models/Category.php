@@ -75,4 +75,16 @@ class Category extends Model
     {
         return collect(self::$fields);
     }
+
+    public function category()
+    {
+        return $this->hasMany(Category::class)->with(['category' => function($query) {
+            $query->with('type');
+        }]);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 }
