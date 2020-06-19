@@ -2,6 +2,7 @@
 
 namespace Fng\CategoryBase\Models;
 
+use Fng\CategoryBase\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -38,8 +39,8 @@ class Category extends Model
         'slug' => 'string',
         'icon' => 'string',
         'image' => 'string',
-        'category_id' => 'integer',
-        'type_id' => 'integer',
+        'category_id' => 'exists:fng_categories,id',
+        'type_id' => 'exists:fng_types,id',
     ];
 
 
@@ -86,5 +87,10 @@ class Category extends Model
     public function type()
     {
         return $this->belongsTo(Type::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsToMany(Product::class, 'fng_category_product');
     }
 }

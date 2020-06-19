@@ -21,8 +21,6 @@ class CreateFngCategoriesTable extends Migration
             $table->string('image')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('fng_categories')->onDelete('cascade');
-            $table->unsignedBigInteger('type_id')->nullable();
-            $table->foreign('type_id')->references('id')->on('fng_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

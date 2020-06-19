@@ -2,6 +2,8 @@
 
 namespace Fng\CategoryBase\Models;
 
+use Fng\CategoryBase\Models\Type;
+use Fng\CategoryBase\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -37,15 +39,17 @@ class Product extends Model
      */
 
     protected static $rules = [
-        'sku' => 'string',
-        'name' => 'string',
-        'slug' => 'string',
+        'sku' => 'string|unique:fng_products,sku',
+        'name' => 'string|max:190',
+        'slug' => 'string|max:190',
         'description' => 'string',
-        'unit' => 'string',
+        'unit' => 'string|max:190',
         'price' => 'numeric',
         'sale_price' => 'numeric',
         'discount' => 'numeric',
         'quantity' => 'integer',
+        'category_id' =>'exists:fng_categories,id',
+        'type_id' =>'required|exists:fng_types,id'
     ];
 
 
@@ -78,10 +82,21 @@ class Product extends Model
         'sale_price',
         'discount',
         'quantity',
+        'type_id'
     ];
 
     static public function getFields()
     {
         return collect(self::$fields);
+    }
+
+    public function category()
+    {
+        return $this->belongsToMany(Category::class, 'fng_category_product');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
     }
 }

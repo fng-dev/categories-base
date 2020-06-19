@@ -2,6 +2,7 @@
 
 namespace Fng\CategoryBase\Models;
 
+use Fng\CategoryBase\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Type extends Model
@@ -59,5 +60,10 @@ class Type extends Model
     static public function getFields()
     {
         return collect(self::$fields);
+    }
+
+    public function product()
+    {
+        return $this->hasMany(Product::class);
     }
 }

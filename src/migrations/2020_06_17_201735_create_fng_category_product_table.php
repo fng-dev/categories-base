@@ -19,7 +19,6 @@ class CreateFngCategoryProductTable extends Migration
             $table->foreign('category_id')->references('id')->on('fng_categories')->onDelete('cascade');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('fng_products')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

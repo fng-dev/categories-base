@@ -21,5 +21,10 @@ Route::group(['namespace' => 'Fng\CategoryBase\Http\Controllers'], function () {
 
     //Product Routes
 
+    Route::post('/admin/products/create', 'FngProductController@create');
+    Route::put('/admin/products/update/{id}', 'FngProductController@update');
+    Route::get('/admin/products', 'FngProductController@getAll');
+    Route::get('/admin/products/get/{id}', 'FngProductController@getById');
+    Route::delete('/admin/products/delete/{id}', 'FngProductController@delete');
 
 });

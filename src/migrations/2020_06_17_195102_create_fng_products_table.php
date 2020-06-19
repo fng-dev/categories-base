@@ -24,6 +24,8 @@ class CreateFngProductsTable extends Migration
             $table->decimal('sale_price', 10, 2)->nullable();
             $table->decimal('discount', 10, 2)->nullable();
             $table->integer('quantity')->nullable();
+            $table->unsignedBigInteger('type_id')->nullable();
+            $table->foreign('type_id')->references('id')->on('fng_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

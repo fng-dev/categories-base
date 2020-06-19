@@ -18,14 +18,31 @@ class FngCategoryController extends Controller
         //
     }
 
+    /**
+     * Create a new category
+     *
+     * @return Category
+     */
+
     public function create(Request $request)
     {
         $this->validate($request, Category::getRules());
 
         $category = Category::create($request->all());
 
+        if (isset($request->product_id)) {
+            $category->product()->attach($request->product_id);
+            $category->product;
+        }
+
         return response()->json($category);
     }
+
+    /**
+     * Update a category
+     *
+     * @return Category
+     */
 
     public function update(Request $request)
     {
@@ -35,21 +52,45 @@ class FngCategoryController extends Controller
 
         if ($category) {
             $category->update($request->all());
+
+            if (isset($request->product_id)) {
+                if (is_array($request->product_id)) {
+                    $category->product()->sync($request->product_id);
+                } else {
+                    $category->product()->syncWithoutDetaching($request->product_id);
+                }
+                $category->product;
+            }
+
+            return response()->json($category);
         }
 
-        return response()->json($category);
+        return response()->json(['Category not found'], 404);
     }
+
+    /**
+     * get a category by id
+     *
+     * @return Category
+     */
 
     public function getById(Request $request)
     {
         $category = Category::find($request->id);
 
         if ($category) {
+            $category->product;
             return response()->json($category);
         }
 
         return response()->json(['Category not found'], 404);
     }
+
+    /**
+     * get all categories
+     *
+     * @return Category
+     */
 
     public function getAll(Request $request)
     {
@@ -78,6 +119,12 @@ class FngCategoryController extends Controller
 
         return response()->json($categories);
     }
+
+    /**
+     * Get a category if is a father category (caegory_id = null)
+     *
+     * @return Category
+     */
 
     public function getFather(Request $request)
     {
@@ -116,13 +163,19 @@ class FngCategoryController extends Controller
         return response()->json($categories);
     }
 
+    /**
+     * delete a category
+     *
+     * @return Category
+     */
+
     public function delete(Request $request)
     {
         $category = Category::find($request->id);
 
         if ($category) {
             $category->delete();
-            return response()->json(['Category deleted'], 404);
+            return response()->json(['Category deleted'], 200);
         }
 
         return response()->json(['Category not found'], 404);

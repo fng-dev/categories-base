@@ -18,6 +18,12 @@ class FngTypeController extends Controller
         //
     }
 
+    /**
+     * Create a new type
+     *
+     * @return Type
+     */
+
     public function create(Request $request)
     {
         $this->validate($request, Type::getRules());
@@ -27,6 +33,12 @@ class FngTypeController extends Controller
         return response()->json($type);
     }
 
+    /**
+     * Update a type
+     *
+     * @return Type
+     */
+
     public function update(Request $request)
     {
         $this->validate($request, Type::getRules());
@@ -35,21 +47,35 @@ class FngTypeController extends Controller
 
         if ($type) {
             $type->update($request->all());
+            return response()->json($type);
         }
 
-        return response()->json($type);
+        return response()->json(['Type not found'], 404);
     }
+
+    /**
+     * get a type by id
+     *
+     * @return Type
+     */
 
     public function getById(Request $request)
     {
         $type = Type::find($request->id);
 
         if ($type) {
+            $type->product;
             return response()->json($type);
         }
 
         return response()->json(['Type not found'], 404);
     }
+
+    /**
+     * get all types
+     *
+     * @return Type
+     */
 
     public function getAll(Request $request)
     {
@@ -70,14 +96,20 @@ class FngTypeController extends Controller
         $paginate = isset($request->paginate) ? intval($request->paginate) : 12;
 
         if ($types) {
-            $types = $types->paginate($paginate);
+            $types = $types->with('product')->paginate($paginate);
         } else {
-            $types = Type::paginate($paginate);
+            $types = Type::with('product')->paginate($paginate);
         }
         $types->appends($request->all())->links();
 
         return response()->json($types);
     }
+
+    /**
+     * delete a type
+     *
+     * @return Type
+     */
 
     public function delete(Request $request)
     {
@@ -85,7 +117,7 @@ class FngTypeController extends Controller
 
         if ($type) {
             $type->delete();
-            return response()->json(['Type deleted'], 404);
+            return response()->json(['Type deleted'], 200);
         }
 
         return response()->json(['Type not found'], 404);
