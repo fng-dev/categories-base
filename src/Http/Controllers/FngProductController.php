@@ -52,7 +52,10 @@ class FngProductController extends Controller
 
     public function update(Request $request)
     {
-        $this->validate($request, Product::getRules());
+        $rules = Product::getRules();
+        $rules['sku'] = $rules['sku'] . ',' . $request->id;
+        // return response()->json($rules);
+        $this->validate($request, $rules);
 
         $product = Product::find($request->id);
 
@@ -84,6 +87,7 @@ class FngProductController extends Controller
         $product = Product::find($request->id);
 
         if ($product) {
+            $product->type;
             $product->category;
             return response()->json($product);
         }

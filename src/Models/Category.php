@@ -15,7 +15,6 @@ class Category extends Model
         'icon',
         'image',
         'category_id',
-        'type_id',
     ];
 
     /**
@@ -39,8 +38,7 @@ class Category extends Model
         'slug' => 'string',
         'icon' => 'string',
         'image' => 'string',
-        'category_id' => 'exists:fng_categories,id',
-        'type_id' => 'exists:fng_types,id',
+        'category_id' => 'nullable|exists:fng_categories,id',
     ];
 
 
@@ -69,7 +67,6 @@ class Category extends Model
         'icon',
         'image',
         'category_id',
-        'type_id',
     ];
 
     static public function getFields()
@@ -79,14 +76,12 @@ class Category extends Model
 
     public function category()
     {
-        return $this->hasMany(Category::class)->with(['category' => function($query) {
-            $query->with('type');
-        }]);
+        return $this->hasMany(Category::class)->with(['category']);
     }
 
-    public function type()
+    public function belongsCategory()
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(Category::class, 'category_id')->with(['category']);
     }
 
     public function product()

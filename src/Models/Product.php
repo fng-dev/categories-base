@@ -20,6 +20,7 @@ class Product extends Model
         'sale_price',
         'discount',
         'quantity',
+        'type_id'
     ];
 
     /**

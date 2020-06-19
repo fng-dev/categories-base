@@ -35,6 +35,8 @@ class FngCategoryController extends Controller
             $category->product;
         }
 
+        $category->belongsCategory;
+
         return response()->json($category);
     }
 
@@ -59,8 +61,12 @@ class FngCategoryController extends Controller
                 } else {
                     $category->product()->syncWithoutDetaching($request->product_id);
                 }
+
                 $category->product;
             }
+
+            $category->category;
+            $category->belongsCategory;
 
             return response()->json($category);
         }
@@ -80,6 +86,8 @@ class FngCategoryController extends Controller
 
         if ($category) {
             $category->product;
+            $category->category;
+            $category->belongsCategory;
             return response()->json($category);
         }
 
@@ -145,17 +153,12 @@ class FngCategoryController extends Controller
         $paginate = isset($request->paginate) ? intval($request->paginate) : 12;
 
         if ($categories) {
-            $categories = $categories->with('type')
-                ->with(['category' => function ($query) {
-                    $query->with('type');
-                }])
+            $categories = $categories->with('category')
                 ->whereNull('category_id')
                 ->paginate($paginate);
         } else {
-            $categories = Category::with('type')
-                ->with(['category' => function ($query) {
-                    $query->with('type');
-                }])->whereNull('category_id')
+            $categories = Category::with('category')
+                ->whereNull('category_id')
                 ->paginate($paginate);
         }
         $categories->appends($request->all())->links();
