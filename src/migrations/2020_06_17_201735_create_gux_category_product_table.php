@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFngCategoryProductTable extends Migration
+class CreateGuxCategoryProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateFngCategoryProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('fng_category_product', function (Blueprint $table) {
+        Schema::create('gux_category_product', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('fng_categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('gux_categories')->onDelete('cascade');
             $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('fng_products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('gux_products')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateFngCategoryProductTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fng_category_product');
+        Schema::dropIfExists('gux_category_product');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFngCategoriesTable extends Migration
+class CreateGuxCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateFngCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fng_categories', function (Blueprint $table) {
+        Schema::create('gux_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->string('icon')->nullable();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('fng_categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('gux_categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateFngCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fng_categories');
+        Schema::dropIfExists('gux_categories');
     }
 }

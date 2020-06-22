@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Type extends Model
 {
-    protected $table = "fng_types";
+    protected $table = "gux_types";
 
     protected $fillable = [
         'name',

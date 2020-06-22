@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $table = "fng_products";
+    protected $table = "gux_products";
 
     protected $fillable = [
         'sku',
@@ -40,7 +40,7 @@ class Product extends Model
      */
 
     protected static $rules = [
-        'sku' => 'string|unique:fng_products,sku',
+        'sku' => 'string|unique:gux_products,sku',
         'name' => 'string|max:190',
         'slug' => 'string|max:190',
         'description' => 'string',
@@ -49,8 +49,8 @@ class Product extends Model
         'sale_price' => 'numeric',
         'discount' => 'numeric',
         'quantity' => 'integer',
-        'category_id' =>'exists:fng_categories,id',
-        'type_id' =>'required|exists:fng_types,id'
+        'category_id' =>'exists:gux_categories,id',
+        'type_id' =>'required|exists:gux_types,id'
     ];
 
 
@@ -93,7 +93,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsToMany(Category::class, 'fng_category_product');
+        return $this->belongsToMany(Category::class, 'gux_category_product');
     }
 
     public function type()

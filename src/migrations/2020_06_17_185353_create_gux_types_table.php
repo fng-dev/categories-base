@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFngTypesTable extends Migration
+class CreateGuxTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFngTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fng_types', function (Blueprint $table) {
+        Schema::create('gux_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateFngTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fng_types');
+        Schema::dropIfExists('gux_types');
     }
 }

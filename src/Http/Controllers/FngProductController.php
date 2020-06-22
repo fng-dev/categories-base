@@ -123,16 +123,16 @@ class FngProductController extends Controller
                     if ($products) {
                         $products = $products->whereExists(function ($query) use ($id) {
                             $query->select('*')
-                                ->from('fng_category_product')
+                                ->from('gux_category_product')
                                 ->whereRaw("category_id = '".$id."'")
-                                ->whereRaw("fng_products.id = fng_category_product.product_id");
+                                ->whereRaw("gux_products.id = gux_category_product.product_id");
                         });
                     } else {
                         $products = Product::whereExists(function ($query) use ($id) {
                             $query->select('*')
-                                ->from('fng_category_product')
+                                ->from('gux_category_product')
                                 ->whereRaw("category_id = '".$id."'")
-                                ->whereRaw("fng_products.id = fng_category_product.product_id");
+                                ->whereRaw("gux_products.id = gux_category_product.product_id");
                         });
                     }
                 }
@@ -140,16 +140,16 @@ class FngProductController extends Controller
                 if ($products) {
                     $products = $products->whereExists(function ($query) use ($request) {
                         $query->select('*')
-                            ->from('fng_category_product')
+                            ->from('gux_category_product')
                             ->whereRaw("category_id = '".$request->category_id."'")
-                            ->whereRaw("fng_products.id = fng_category_product.product_id");
+                            ->whereRaw("gux_products.id = gux_category_product.product_id");
                     });
                 } else {
                     $products = Product::whereExists(function ($query) use ($request) {
                         $query->select('*')
-                            ->from('fng_category_product')
+                            ->from('gux_category_product')
                             ->whereRaw("category_id = '".$request->category_id."'")
-                            ->whereRaw("fng_products.id = fng_category_product.product_id");
+                            ->whereRaw("gux_products.id = gux_category_product.product_id");
                     });
                 }
             }

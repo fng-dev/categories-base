@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $table = "fng_categories";
+    protected $table = "gux_categories";
 
     protected $fillable = [
         'name',
@@ -38,7 +38,7 @@ class Category extends Model
         'slug' => 'string',
         'icon' => 'string',
         'image' => 'string',
-        'category_id' => 'nullable|exists:fng_categories,id',
+        'category_id' => 'nullable|exists:gux_categories,id',
     ];
 
 
@@ -86,6 +86,6 @@ class Category extends Model
 
     public function product()
     {
-        return $this->belongsToMany(Product::class, 'fng_category_product');
+        return $this->belongsToMany(Product::class, 'gux_category_product');
     }
 }

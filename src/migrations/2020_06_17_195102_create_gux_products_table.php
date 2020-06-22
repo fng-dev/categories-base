@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFngProductsTable extends Migration
+class CreateGuxProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFngProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fng_products', function (Blueprint $table) {
+        Schema::create('gux_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('sku')->unique()->nullable();
             $table->string('name')->nullable();
@@ -22,10 +22,10 @@ class CreateFngProductsTable extends Migration
             $table->string('unit')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('sale_price', 10, 2)->nullable();
-            $table->decimal('discount', 10, 2)->nullable();
+            $table->integer('discount')->nullable();
             $table->integer('quantity')->nullable();
             $table->unsignedBigInteger('type_id')->nullable();
-            $table->foreign('type_id')->references('id')->on('fng_types')->onDelete('cascade');
+            $table->foreign('type_id')->references('id')->on('gux_types')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -37,6 +37,6 @@ class CreateFngProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fng_products');
+        Schema::dropIfExists('gux_products');
     }
 }
