@@ -158,9 +158,9 @@ class FngProductController extends Controller
         $paginate = isset($request->paginate) ? intval($request->paginate) : 12;
 
         if ($products) {
-            $products = $products->with('category')->paginate($paginate);
+            $products = $products->with(['category', 'type'])->paginate($paginate);
         } else {
-            $products = Product::with('category')->paginate($paginate);
+            $products = Product::with(['category', 'type'])->paginate($paginate);
         }
 
         $products->appends($request->all())->links();
