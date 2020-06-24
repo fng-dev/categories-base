@@ -46,10 +46,10 @@ class Product extends Model
         'description' => 'string',
         'unit' => 'string|max:190',
         'price' => 'numeric',
-        'sale_price' => 'numeric',
-        'discount' => 'numeric',
+        'sale_price' => 'numeric|nullable',
+        'discount' => 'numeric|nullable',
         'quantity' => 'integer',
-        'category_id' =>'exists:gux_categories,id',
+        'category_id' =>'nullable|exists:gux_categories,id',
         'type_id' =>'required|exists:gux_types,id'
     ];
 

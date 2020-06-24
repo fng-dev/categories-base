@@ -27,4 +27,7 @@ Route::group(['namespace' => 'Fng\CategoryBase\Http\Controllers'], function () {
     Route::get('/admin/products/{id}', 'FngProductController@getById');
     Route::delete('/admin/products/delete/{id}', 'FngProductController@delete');
 
+    // Support Data
+    Route::get('/admin/support/product', 'SupportInfoController@getInitProductInfo');
+
 });

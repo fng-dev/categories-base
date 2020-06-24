@@ -119,19 +119,19 @@ class FngProductController extends Controller
 
         if (isset($request->category_id)) {
             if (is_array($request->category_id)) {
-                foreach($request->category_id as $id) {
+                foreach ($request->category_id as $id) {
                     if ($products) {
                         $products = $products->whereExists(function ($query) use ($id) {
                             $query->select('*')
                                 ->from('gux_category_product')
-                                ->whereRaw("category_id = '".$id."'")
+                                ->whereRaw("category_id = '" . $id . "'")
                                 ->whereRaw("gux_products.id = gux_category_product.product_id");
                         });
                     } else {
                         $products = Product::whereExists(function ($query) use ($id) {
                             $query->select('*')
                                 ->from('gux_category_product')
-                                ->whereRaw("category_id = '".$id."'")
+                                ->whereRaw("category_id = '" . $id . "'")
                                 ->whereRaw("gux_products.id = gux_category_product.product_id");
                         });
                     }
@@ -141,14 +141,14 @@ class FngProductController extends Controller
                     $products = $products->whereExists(function ($query) use ($request) {
                         $query->select('*')
                             ->from('gux_category_product')
-                            ->whereRaw("category_id = '".$request->category_id."'")
+                            ->whereRaw("category_id = '" . $request->category_id . "'")
                             ->whereRaw("gux_products.id = gux_category_product.product_id");
                     });
                 } else {
                     $products = Product::whereExists(function ($query) use ($request) {
                         $query->select('*')
                             ->from('gux_category_product')
-                            ->whereRaw("category_id = '".$request->category_id."'")
+                            ->whereRaw("category_id = '" . $request->category_id . "'")
                             ->whereRaw("gux_products.id = gux_category_product.product_id");
                     });
                 }
@@ -165,7 +165,11 @@ class FngProductController extends Controller
 
         $products->appends($request->all())->links();
 
-        return response()->json($products);
+        $response = array_merge($products->toArray(), [
+            "categories" => Category::all()->toArray()
+        ]);
+
+        return response()->json($response);
     }
 
 
