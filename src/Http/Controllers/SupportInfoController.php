@@ -27,7 +27,7 @@ class SupportInfoController extends Controller
 
     public function getInitProductInfo()
     {
-        $categories = Category::all();
+        $categories = Category::with('type')->get();
         $types = Type::all();
 
         return response()->json([

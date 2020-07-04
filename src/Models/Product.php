@@ -20,7 +20,6 @@ class Product extends Model
         'sale_price',
         'discount',
         'quantity',
-        'type_id'
     ];
 
     /**
@@ -49,8 +48,7 @@ class Product extends Model
         'sale_price' => 'numeric|nullable',
         'discount' => 'numeric|nullable',
         'quantity' => 'integer',
-        'category_id' =>'nullable|exists:gux_categories,id',
-        'type_id' =>'required|exists:gux_types,id'
+        'categories' =>'nullable|array',
     ];
 
 
@@ -96,8 +94,8 @@ class Product extends Model
         return $this->belongsToMany(Category::class, 'gux_category_product');
     }
 
-    public function type()
+    public function images()
     {
-        return $this->belongsTo(Type::class);
+        return $this->hasMany(Gallery::class, 'product_id', 'id');
     }
 }

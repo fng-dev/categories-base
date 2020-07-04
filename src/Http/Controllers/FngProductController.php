@@ -2,10 +2,12 @@
 
 namespace Fng\CategoryBase\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Fng\CategoryBase\Models\Category;
-use Fng\CategoryBase\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Fng\CategoryBase\Models\Gallery;
+use Fng\CategoryBase\Models\Product;
+use Fng\CategoryBase\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class FngProductController extends Controller
 {
@@ -33,12 +35,28 @@ class FngProductController extends Controller
 
         $product = Product::create($request->all());
 
-        if (isset($request->category_id)) {
-            $product->category()->attach($request->category_id);
+        if(isset($request->image)) {
+            if(is_array($request->image)) {
+                foreach($request->image as $image) {
+                    $url = SELF::decodeAndSendImg($image);
+                    $product->images()->create([
+                        'url' => $url
+                    ]);
+                }
+            }else {
+                $url = SELF::decodeAndSendImg($request->image);
+                $product->images()->create([
+                    'url' => $url
+                ]);
+            }
+        }
+
+        if (isset($request->categories)) {
+            $product->category()->attach($request->categories);
             $product->category;
         }
 
-        $product->type;
+        $product->images;
 
         return response()->json($product);
     }
@@ -54,7 +72,6 @@ class FngProductController extends Controller
     {
         $rules = Product::getRules();
         $rules['sku'] = $rules['sku'] . ',' . $request->id;
-        // return response()->json($rules);
         $this->validate($request, $rules);
 
         $product = Product::find($request->id);
@@ -62,13 +79,32 @@ class FngProductController extends Controller
         if ($product) {
             $product->update($request->all());
 
-            if (isset($request->category_id)) {
-                if (is_array($request->category_id)) {
-                    $product->category()->sync($request->category_id);
-                } else {
-                    $product->category()->syncWithoutDetaching($request->category_id);
+            if(isset($request->image)) {
+
+                foreach($product->images as $image) {
+                    Storage::disk('local')->delete($image->url);
+                    $image->delete();
+                }
+
+                if(is_array($request->image)) {
+                    foreach($request->image as $image) {
+                        $url = SELF::decodeAndSendImg($image);
+                        $product->images()->create([
+                            'url' => $url
+                        ]);
+                    }
+                }else {
+                    $url = SELF::decodeAndSendImg($request->image);
+                    $product->images()->create([
+                        'url' => $url
+                    ]);
                 }
             }
+
+            if (isset($request->categories)) {
+                $product->category()->sync($request->categories);
+            }
+
             $product->category;
             return response()->json($product);
         }
@@ -87,7 +123,6 @@ class FngProductController extends Controller
         $product = Product::find($request->id);
 
         if ($product) {
-            $product->type;
             $product->category;
             return response()->json($product);
         }
@@ -155,12 +190,32 @@ class FngProductController extends Controller
             }
         }
 
-        $paginate = isset($request->paginate) ? intval($request->paginate) : 12;
+        $paginate = isset($request->paginate) ? intval($request->paginate) : 4;
+
+        if (isset($request->order)) {
+            if (is_array($request->order)) {
+                foreach ($request->order as $order) {
+                    $ob = explode(",", $order);
+                    if ($products !== null) {
+                        $products->orderBy($ob[0], $ob[1]);
+                    } else {
+                        $products = Product::orderBY($ob[0], $ob[1]);
+                    }
+                }
+            } else {
+                $ob = explode(",", $request->order);
+                if ($products !== null) {
+                    $products->orderBy($ob[0], $ob[1]);
+                } else {
+                    $products = Product::orderBY($ob[0], $ob[1]);
+                }
+            }
+        }
 
         if ($products) {
-            $products = $products->with(['category', 'type'])->paginate($paginate);
+            $products = $products->with(['category', 'images'])->paginate($paginate);
         } else {
-            $products = Product::with(['category', 'type'])->paginate($paginate);
+            $products = Product::with(['category', 'images'])->paginate($paginate);
         }
 
         $products->appends($request->all())->links();
@@ -189,5 +244,43 @@ class FngProductController extends Controller
         }
 
         return response()->json(['Product not found'], 404);
+    }
+
+    public static function decodeAndSendImg($data)
+    {
+
+        $type = "";
+
+        if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
+
+            $data = substr($data, strpos($data, ',') + 1);
+
+            $type = strtolower($type[1]);
+
+            $data = base64_decode($data);
+
+            if ($data === false) {
+                return 'Base64 Failed';
+            }
+        } else {
+
+            return 'Did not match data URI with image data';
+        }
+
+        $name = randomString() . "." . $type;
+
+        Storage::disk('local')->put($name, $data);
+
+        return $name;
+    }
+
+    public function randomString()
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randstring = '';
+        for ($i = 0; $i < 50; $i++) {
+            $randstring .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        return $randstring;
     }
 }

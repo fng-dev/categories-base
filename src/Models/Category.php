@@ -15,6 +15,7 @@ class Category extends Model
         'icon',
         'image',
         'category_id',
+        'type_id',
     ];
 
     /**
@@ -39,6 +40,7 @@ class Category extends Model
         'icon' => 'string',
         'image' => 'string',
         'category_id' => 'nullable|exists:gux_categories,id',
+        'type_id' => 'nullable|exists:gux_types,id',
     ];
 
 
@@ -87,5 +89,10 @@ class Category extends Model
     public function product()
     {
         return $this->belongsToMany(Product::class, 'gux_category_product');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
     }
 }

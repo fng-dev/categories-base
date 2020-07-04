@@ -21,6 +21,8 @@ class CreateGuxCategoriesTable extends Migration
             $table->string('image')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('gux_categories')->onDelete('cascade');
+            $table->unsignedBigInteger('type_id')->nullable();
+            $table->foreign('type_id')->references('id')->on('gux_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

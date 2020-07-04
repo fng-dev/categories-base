@@ -2,15 +2,17 @@
 
 namespace Fng\CategoryBase\Models;
 
-use Fng\CategoryBase\Models\Category;
+use Fng\CategoryBase\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
-class Type extends Model
+class Gallery extends Model
 {
-    protected $table = "gux_types";
+    protected $table = "gux_product_galery";
 
     protected $fillable = [
         'name',
+        'url',
+        'product_id'
     ];
 
     /**
@@ -30,7 +32,7 @@ class Type extends Model
      */
 
     protected static $rules = [
-        'name' => 'required|string',
+        'name' => 'string',
     ];
 
 
@@ -62,8 +64,8 @@ class Type extends Model
         return collect(self::$fields);
     }
 
-    public function category()
+    public function product()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsTo(Product::class);
     }
 }
