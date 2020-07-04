@@ -71,6 +71,10 @@ class Category extends Model
         'category_id',
     ];
 
+    public function setSlugAttribute($value) {
+        $this->attributes['slug'] = str_replace(" ", "_", strtolower($value));
+    }
+
     static public function getFields()
     {
         return collect(self::$fields);

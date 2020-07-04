@@ -89,6 +89,10 @@ class Product extends Model
         return collect(self::$fields);
     }
 
+    public function setSlugAttribute($value) {
+        $this->attributes['slug'] = str_replace(" ", "_", strtolower($value));
+    }
+
     public function category()
     {
         return $this->belongsToMany(Category::class, 'gux_category_product');
