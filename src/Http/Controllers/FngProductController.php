@@ -275,14 +275,14 @@ class FngProductController extends Controller
             return 'Did not match data URI with image data';
         }
 
-        $name = randomString() . "." . $type;
+        $name = SELF::randomString() . "." . $type;
 
         Storage::disk('local')->put($name, $data);
 
         return $name;
     }
 
-    public function randomString()
+    public static function randomString()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';
