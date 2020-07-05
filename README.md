@@ -13,6 +13,12 @@ composer require fng-dev/category-base
 
 ## Configs
 
+### ENV
+
+By default, the post, put and delete routes are configured with Laravel Auth middleware.
+
+To disable it, just add the variable ```GUX_AUTH=false``` in the .env file of laravel / lumen
+
 ### Lumen
 
 Uncomment the lines
