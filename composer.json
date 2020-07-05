@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Fng\\CategoryBase\\LoggerServiceProvider"
+                "Fng\\CategoryBase\\CategoryServiceProvider"
             ]
         }
     }
