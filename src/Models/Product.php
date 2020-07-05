@@ -20,6 +20,7 @@ class Product extends Model
         'sale_price',
         'discount',
         'quantity',
+        'active'
     ];
 
     /**
@@ -81,7 +82,6 @@ class Product extends Model
         'sale_price',
         'discount',
         'quantity',
-        'type_id'
     ];
 
     static public function getFields()
@@ -101,5 +101,10 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(Gallery::class, 'product_id', 'id');
+    }
+
+    public function scopeActives($query)
+    {
+        return $query->where('active', 1);
     }
 }

@@ -120,7 +120,7 @@ class FngProductController extends Controller
 
     public function getById(Request $request)
     {
-        $product = Product::find($request->id);
+        $product = Product::where('id', $request->id)->where('active', 1)->get()->first();
 
         if ($product) {
             $product->category;
@@ -209,6 +209,14 @@ class FngProductController extends Controller
                 } else {
                     $products = Product::orderBY($ob[0], $ob[1]);
                 }
+            }
+        }
+
+        if(!isset($request->active)) {
+            if ($products) {
+                $products = $products->actives();
+            } else {
+                $products = Product::actives();
             }
         }
 

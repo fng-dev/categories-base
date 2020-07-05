@@ -24,6 +24,7 @@ class CreateGuxProductsTable extends Migration
             $table->decimal('sale_price', 10, 2)->nullable();
             $table->integer('discount')->nullable();
             $table->integer('quantity')->nullable();
+            $table->boolean('active')->default(1);
             $table->timestamps();
         });
     }
