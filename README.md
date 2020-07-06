@@ -53,4 +53,14 @@ Run migrations command
     php artisan migration
 ```
 
+Write permission for apache. Ex:
 
+```sh
+    chown -R $user:www-data storage/
+```
+
+Create a symbolic link between the app folder inside storage and the public folder. Exemplo:
+
+```sh
+    ln -s /var/www/fng-dev/categories/storage/app /var/www/fng-dev/categories/public
+```
