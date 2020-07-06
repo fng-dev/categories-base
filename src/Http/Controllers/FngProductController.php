@@ -41,14 +41,14 @@ class FngProductController extends Controller
                     $url = SELF::decodeAndSendImg($image);
                     $product->images()->create([
                         'name' => $url,
-                        'url' => $url
+                        'url' => "app/" .$url
                     ]);
                 }
             }else {
                 $url = SELF::decodeAndSendImg($request->image);
                 $product->images()->create([
                     'name' => $url,
-                    'url' => $url
+                    'url' => "app/" .$url
                 ]);
             }
         }
@@ -93,14 +93,14 @@ class FngProductController extends Controller
                         $url = SELF::decodeAndSendImg($image);
                         $product->images()->create([
                             'name' => $url,
-                            'url' => $url
+                            'url' => "app/" .$url
                         ]);
                     }
                 }else {
                     $url = SELF::decodeAndSendImg($request->image);
                     $product->images()->create([
                         'name' => $url,
-                        'url' => $url
+                        'url' => "app/" .$url
                     ]);
                 }
             }
