@@ -1,0 +1,143 @@
+FORMAT: 1A
+
+# Documentación de ruta - categories-base package
+
+# Group Categories
+
+## Category Collection [/]
+
+### Categories [GET /admin/categories]
+
+Devuelve todas las categorias
+
++ Response 200 (application/json)
+    + Attributes (array[Category])
+
+### Categories Father [GET /admin/categories/get/father]
+
+Devuelve todas las categorias padres que no son hijas de ninguna otra categoria.
+
++ Response 200 (application/json)
+    + Attributes (array[CategoryFather])
+
+### Categories By ID [GET /admin/categories/{id}]
+
+Devuelve una categoria mediante su id.
+
++ Parameters
+    + id: 1 (integer)
+
++ Response 200 (application/json)
+    + Attributes (array[CategoryId])
+
+
+# Group Types
+
+## Type Collection [/]
+
+### Types [GET /admin/types]
+
+Devuelve todos los types
+
++ Response 200 (application/json)
+    + Attributes (array[Type])
+
+### Type By ID [GET /admin/types/{id}]
+
+Devuelve un tipo mediante su id.
+
++ Parameters
+    + id: 1 (integer)
+
++ Response 200 (application/json)
+    + Attributes (Type)
+
+
+# Group Products
+
+## Product Collection [/]
+
+### Products [GET /admin/products]
+
+Devuelve todos los productos
+
++ Parameters
+    + name: `name=apple`
+    + sku: `sku=SKU-12345`
+    + description: `description=Fresh apple`
+    + order: `order=nombre del campo,ASC`
+    + active: all
+    + paginate: 4
+    + uriExample : `/admin/products?name=apple&sku=SKU-12345&description=Fresh&order=sku,ASC`
+
+
++ Response 200 (application/json)
+    + Attributes (array[Product])
+
+### Product By ID [GET /admin/products/{id}]
+
+Devuelve un producto mediante su id.
+
++ Parameters
+    + id: 1 (integer)
+
++ Response 200 (application/json)
+    + Attributes (Product)
+
+
+
+# Data Structures
+
+## Category (object)
++ name: Categoria 1
++ slug: categoria_1
++ icon: icon
++ image: icon
++ category_id: null
++ type_id: 1
++ type: (Type)
+
+## CategoryFather (object)
++ name: Categoria 1
++ slug: categoria_1
++ icon: icon
++ image: icon
++ category_id: null
++ type_id: 1
++ category: (array[Category])
++ type: (Type)
+
+## CategoryId (object)
++ name: Categoria 1
++ slug: categoria_1
++ icon: icon
++ image: icon
++ category_id: null
++ type_id: 1
++ category: (array[Category])
++ type: (Type)
++ product: (array[Product])
+
+## Type (object)
++ id: 1
++ name: Alimentos
++ category: (array[Category])
+
+## Product (object)
++ sku: 123456
++ name: Product 1
++ slug: product_1
++ description: Un Producto
++ unit: ml
++ price: 100
++ sale_price: 120
++ discount: 0
++ quantity: 9
++ active: 1
++ category: (array[Category])
++ images: (array[Image])
+
+## Image
++ name: `2ihM00c5zKwSOnOcc4eiC1TB6zFoZpHypCMU7iB4BoSi1WrVAJ.png`
++ url: `2ihM00c5zKwSOnOcc4eiC1TB6zFoZpHypCMU7iB4BoSi1WrVAJ.png`
+

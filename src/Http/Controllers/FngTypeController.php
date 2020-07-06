@@ -64,7 +64,7 @@ class FngTypeController extends Controller
         $type = Type::find($request->id);
 
         if ($type) {
-            $type->product;
+            $type->category;
             return response()->json($type);
         }
 
@@ -96,9 +96,9 @@ class FngTypeController extends Controller
         $paginate = isset($request->paginate) ? intval($request->paginate) : 12;
 
         if ($types) {
-            $types = $types->with('product')->paginate($paginate);
+            $types = $types->with('category')->paginate($paginate);
         } else {
-            $types = Type::with('product')->paginate($paginate);
+            $types = Type::with('category')->paginate($paginate);
         }
         $types->appends($request->all())->links();
 

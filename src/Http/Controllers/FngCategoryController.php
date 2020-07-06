@@ -119,9 +119,9 @@ class FngCategoryController extends Controller
         $paginate = isset($request->paginate) ? intval($request->paginate) : 12;
 
         if ($categories) {
-            $categories = $categories->paginate($paginate);
+            $categories = $categories->with(['type'], 'belongsCategory')->paginate($paginate);
         } else {
-            $categories = Category::paginate($paginate);
+            $categories = Category::with(['type', 'belongsCategory'])->paginate($paginate);
         }
         $categories->appends($request->all())->links();
 
@@ -153,11 +153,11 @@ class FngCategoryController extends Controller
         $paginate = isset($request->paginate) ? intval($request->paginate) : 12;
 
         if ($categories) {
-            $categories = $categories->with('category')
+            $categories = $categories->with(['category', 'type'])
                 ->whereNull('category_id')
                 ->paginate($paginate);
         } else {
-            $categories = Category::with('category')
+            $categories = Category::with(['category', 'type'])
                 ->whereNull('category_id')
                 ->paginate($paginate);
         }

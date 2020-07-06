@@ -40,12 +40,14 @@ class FngProductController extends Controller
                 foreach($request->image as $image) {
                     $url = SELF::decodeAndSendImg($image);
                     $product->images()->create([
+                        'name' => $url,
                         'url' => $url
                     ]);
                 }
             }else {
                 $url = SELF::decodeAndSendImg($request->image);
                 $product->images()->create([
+                    'name' => $url,
                     'url' => $url
                 ]);
             }
@@ -90,12 +92,14 @@ class FngProductController extends Controller
                     foreach($request->image as $image) {
                         $url = SELF::decodeAndSendImg($image);
                         $product->images()->create([
+                            'name' => $url,
                             'url' => $url
                         ]);
                     }
                 }else {
                     $url = SELF::decodeAndSendImg($request->image);
                     $product->images()->create([
+                        'name' => $url,
                         'url' => $url
                     ]);
                 }
