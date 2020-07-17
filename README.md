@@ -8,7 +8,7 @@
 ## Installation
 
 ```sh
-composer require fng-dev/category-base
+composer require gux/category
 ```
 
 ## Configs
